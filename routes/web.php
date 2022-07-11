@@ -18,11 +18,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
 
-Route::get('/top', [ProductManagement::class, 'top'])->name('top');
+Route::get('/', [ProductManagement::class, 'top'])->middleware(['auth'])->name('top');
 Route::get('/list', [ProductManagement::class, 'list'])->name('list');
 Route::get('/newadd', [ProductManagement::class, 'newadd'])->name('newadd');
 Route::get('/contact', [ProductManagement::class, 'contact'])->name('contact');
