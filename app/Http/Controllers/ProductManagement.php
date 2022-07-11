@@ -14,7 +14,7 @@ class ProductManagement extends Controller
   
   public function list ()
   {
-    $items = DB::select('select * from items');
+    $items = DB::table('items')->paginate(5);
     // dd($items);
     return view('list', compact('items'));
   }

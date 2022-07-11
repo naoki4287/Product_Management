@@ -28,5 +28,8 @@
     </tbody>
     @endforeach
     </table>
+    <div class="link mt-12 flex justify-center">
+      {{ $items->links() }}
+    </div>
   </div>
 </x-app-layout>
