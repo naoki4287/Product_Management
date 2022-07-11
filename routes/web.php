@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductManagement;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,5 +21,10 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+Route::get('/top', [ProductManagement::class, 'top'])->name('top');
+Route::get('/list', [ProductManagement::class, 'list'])->name('list');
+Route::get('/newadd', [ProductManagement::class, 'newadd'])->name('newadd');
+Route::get('/contact', [ProductManagement::class, 'contact'])->name('contact');
 
 require __DIR__.'/auth.php';
