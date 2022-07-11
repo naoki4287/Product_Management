@@ -17,9 +17,10 @@ class DatabaseSeeder extends Seeder
   public function run()
   {
     // seederを使う場合
-    // $this->call([
-    //   UserSeeder::class,
-    // ]);
+    $this->call([
+      // UserSeeder::class,
+      ItemSeeder::class,
+    ]);
 
     // factoryを使う場合
     User::factory(3)->create();

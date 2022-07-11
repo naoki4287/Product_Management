@@ -17,10 +17,10 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
+    protected $guarded = [
+        'remember_token',
+        'created_at',
+        'updated_at',
     ];
 
     /**
