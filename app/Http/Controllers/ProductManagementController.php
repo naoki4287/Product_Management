@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductRegisterRequest;
 use App\Models\Item;
 use App\Models\Log;
 use Illuminate\Http\Request;
@@ -26,12 +27,14 @@ class ProductManagementController extends Controller
     return view('newadd');
   }
 
-  public function productRegister (Request $request)
+  public function productRegister (ProductRegisterRequest $request)
   {
     $item = $request->only(['product_name', 'arrival_source', 'manufacturer', 'price']);
-    $log = $request->only(['email', 'tel']);
+    $log = $request->only(['mail', 'tel']);
     Item::create(['product_name' => $item['product_name'], 'arrival_source' => $item['arrival_source'], 'manufacturer' => $item['manufacturer'], 'price' => $item['price']]);
-    Log::create(['email' => $log['email'], 'tel' => $log['tel']]);
+    Log::create(['mail' => $log['mail'], 'tel' => $log['tel']]);
+    
+    
     return redirect()->route('list');
   }
   
