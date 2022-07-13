@@ -2,24 +2,11 @@
   <div class="ml-4">
     <form action="{{ route('productRegister') }}" method="POST">
       @csrf
-      @error('product_name')
-        <div>{{ $message }}</div>
-      @enderror
-      @error('arrival_source')
-        <div>{{ $message }}</div>
-      @enderror
-      @error('manufacturer')
-        <div>{{ $message }}</div>
-      @enderror
-      @error('price')
-        <div>{{ $message }}</div>
-      @enderror
-      @error('mail')
-        <div>{{ $message }}</div>
-      @enderror
-      @error('tel')
-        <div>{{ $message }}</div>
-      @enderror
+      <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+      </ul>
       <label class="inline-block mt-4" for="product_name">商品名</label><br>
       <x-PMinput name="product_name" value="{{ old('product_name') }}"></x-PMinput><br>
       <label class="inline-block mt-4" for="arrival_source">入荷元</label><br>
