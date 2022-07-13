@@ -33,7 +33,7 @@ class ProductRegisterRequest extends FormRequest
       'manufacturer' => 'required',
       'price' => 'required|integer',
       'mail' => 'required|email',
-      'tel' => 'required|integer',
+      'tel' => 'required|numeric',
     ];
   }
 
