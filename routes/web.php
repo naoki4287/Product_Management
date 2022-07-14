@@ -18,10 +18,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [ProductManagementController::class, 'top'])->middleware(['auth'])->name('top');
 Route::get('/list', [ProductManagementController::class, 'list'])->name('list');
 Route::get('/newadd', [ProductManagementController::class, 'newadd'])->name('newadd');
+Route::post('/productRegister', [ProductManagementController::class, 'productRegister'])->name('productRegister');
 Route::get('/confirm', [ProductManagementController::class, 'confirm'])->name('confirm');
 Route::post('/storeOrBack', [ProductManagementController::class, 'storeOrBack'])->name('storeOrBack');
 Route::get('/complete', [ProductManagementController::class, 'complete'])->name('complete');
 Route::get('/contact', [ProductManagementController::class, 'contact'])->name('contact');
-Route::post('/productRegister', [ProductManagementController::class, 'productRegister'])->name('productRegister');
+Route::post('/contactValidateSession', [ProductManagementController::class, 'contactValidateSession'])->name('contactValidateSession');
+Route::get('/contactConfirm', [ProductManagementController::class, 'contactConfirm'])->name('contactConfirm');
+Route::post('/sendOrBack', [ProductManagementController::class, 'sendOrBack'])->name('sendOrBack');
+Route::post('/contactMail', [ProductManagementController::class, 'contactMail'])->name('contactMail');
+Route::get('/sendComplete', [ProductManagementController::class, 'sendComplete'])->name('sendComplete');
+Route::get('/mail', [ProductManagementController::class, 'mail'])->name('mail');
 
 require __DIR__.'/auth.php';
