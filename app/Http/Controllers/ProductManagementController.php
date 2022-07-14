@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\contactValidateSessionRequest;
 use App\Http\Requests\ProductRegisterRequest;
+use App\Mail\ContactMail;
 use App\Models\Item;
 use App\Models\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class ProductManagementController extends Controller
 {
@@ -25,6 +28,16 @@ class ProductManagementController extends Controller
   public function newadd()
   {
     return view('newadd');
+  }
+
+  public function productRegister(ProductRegisterRequest $request)
+  {
+    $item = $request->only(['product_name', 'arrival_source', 'manufacturer', 'price']);
+    $request->session()->put('item', $item);
+    $log = $request->only(['mail', 'tel']);
+    $request->session()->put('log', $log);
+
+    return redirect()->route('confirm');
   }
 
   public function confirm(Request $request)
@@ -57,18 +70,45 @@ class ProductManagementController extends Controller
     return view('complete');
   }
 
-  public function productRegister(ProductRegisterRequest $request)
-  {
-    $item = $request->only(['product_name', 'arrival_source', 'manufacturer', 'price']);
-    $request->session()->put('item', $item);
-    $log = $request->only(['mail', 'tel']);
-    $request->session()->put('log', $log);
-
-    return redirect()->route('confirm');
-  }
 
   public function contact()
   {
     return view('contact');
+  }
+
+  public function contactValidateSession(contactValidateSessionRequest $request)
+  {
+    $contact = $request->only(['name', 'mail', 'tel', 'contact']);
+    $request->session()->put('contact', $contact);
+    return redirect()->route('contactConfirm');
+  }
+
+  public function contactConfirm(Request $request)
+  {
+    $sesContact = $request->session()->get('contact');
+    return view('contactConfirm', compact('sesContact'));
+  }
+
+  public function sendOrBack(Request $request)
+  {
+    $sesContact = $request->session()->get('contact');
+    // dd($sesContact);
+    if ($request->input('back') == 'back') {
+      return redirect('contact')->withInput($sesContact);
+    } else {
+      Mail::to($sesContact['mail'])->send(new ContactMail($sesContact));
+      Mail::to('naoki@gmail.com')->send(new ContactMail($sesContact));
+      return redirect()->route('sendComplete');
+    }
+  }
+
+  public function sendComplete()
+  {
+    return view('sendComplete');
+  }
+
+  public function mail()
+  {
+    return view('mail');
   }
 }
