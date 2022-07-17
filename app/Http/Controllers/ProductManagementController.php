@@ -20,7 +20,9 @@ class ProductManagementController extends Controller
 
   public function list()
   {
-    $items = DB::table('items')->paginate(5);
+    $items = DB::table('items')
+      ->where('deleted_at', '=', NULL)
+      ->paginate(5);
     // dd($items);
     return view('list', compact('items'));
   }
@@ -68,6 +70,17 @@ class ProductManagementController extends Controller
   public function complete()
   {
     return view('complete');
+  }
+
+  public function delete(Request $request)
+  {
+    $deleteItems = $request->itemId;
+    for ($i = 0; $i < count($deleteItems); $i++) {
+      intval($deleteItems[$i]);
+      Item::find($deleteItems[$i])->delete();
+    }
+
+    return back();
   }
 
 
