@@ -20,7 +20,7 @@ return new class extends Migration
       $table->string('manufacturer');
       $table->integer('price');
       $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
-      $table->softDeletes()->nullable();
+      $table->softDeletes();
     });
   }
 

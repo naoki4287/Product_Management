@@ -22,6 +22,7 @@ Route::post('/productRegister', [ProductManagementController::class, 'productReg
 Route::get('/confirm', [ProductManagementController::class, 'confirm'])->name('confirm');
 Route::post('/storeOrBack', [ProductManagementController::class, 'storeOrBack'])->name('storeOrBack');
 Route::get('/complete', [ProductManagementController::class, 'complete'])->name('complete');
+Route::post('/delete', [ProductManagementController::class, 'delete'])->name('delete');
 Route::get('/contact', [ProductManagementController::class, 'contact'])->name('contact');
 Route::post('/contactValidateSession', [ProductManagementController::class, 'contactValidateSession'])->name('contactValidateSession');
 Route::get('/contactConfirm', [ProductManagementController::class, 'contactConfirm'])->name('contactConfirm');
