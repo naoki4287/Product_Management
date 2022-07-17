@@ -23,6 +23,8 @@ Route::get('/confirm', [ProductManagementController::class, 'confirm'])->name('c
 Route::post('/storeOrBack', [ProductManagementController::class, 'storeOrBack'])->name('storeOrBack');
 Route::get('/complete', [ProductManagementController::class, 'complete'])->name('complete');
 Route::post('/delete', [ProductManagementController::class, 'delete'])->name('delete');
+Route::get('/edit/{id}', [ProductManagementController::class, 'edit'])->name('edit');
+Route::post('/update', [ProductManagementController::class, 'update'])->name('update');
 Route::get('/contact', [ProductManagementController::class, 'contact'])->name('contact');
 Route::post('/contactValidateSession', [ProductManagementController::class, 'contactValidateSession'])->name('contactValidateSession');
 Route::get('/contactConfirm', [ProductManagementController::class, 'contactConfirm'])->name('contactConfirm');

@@ -83,6 +83,18 @@ class ProductManagementController extends Controller
     return back();
   }
 
+  public function edit($id)
+  {
+    $item = Item::find($id);
+    $log = Log::find($id);
+    // dd($log);
+    return view('edit', compact('item', 'log'));
+  }
+
+  public function update(Request $request)
+  {
+   
+  }
 
   public function contact()
   {

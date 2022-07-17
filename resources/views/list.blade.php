@@ -18,14 +18,13 @@
         @foreach ($items as $item)
         <tbody>
           <tr>
-            <input type="hidden" name="item">
-            <td class="border-2 border-gray-200 px-4 py-2"><input class="checkbox rounded-md" type="checkbox" name="itemId[]" value="{{ $item->id }}"></td>
-            <td class="border-2 border-gray-200 px-4 py-2">{{ $item->id }}</td>
-            <td class="border-2 border-gray-200 px-4 py-2">{{ $item->product_name }}</td>
-            <td class="border-2 border-gray-200 px-4 py-2">{{ $item->arrival_source }}</td>
-            <td class="border-2 border-gray-200 px-4 py-2">{{ $item->manufacturer }}</td>
-            <td class="border-2 border-gray-200 px-8 py-2">{{ $item->price }}</td>
-            <td class="border-2 border-gray-200 px-4 py-2">{{ $item->created_at }}</td>
+              <td class="border-2 border-gray-200 px-4 py-2"><input class="checkbox rounded-md" type="checkbox" name="itemId[]" value="{{ $item->id }}"></td>
+              <td class="border-2 border-gray-200 px-4 py-2">{{ $item->id }}</td>
+              <td class="border-2 border-gray-200 px-4 py-2">{{ $item->product_name }}</td>
+              <td class="border-2 border-gray-200 px-4 py-2">{{ $item->arrival_source }}</td>
+              <td class="border-2 border-gray-200 px-4 py-2">{{ $item->manufacturer }}</td>
+              <td class="border-2 border-gray-200 px-8 py-2">{{ $item->price }}</td>
+              <td class="border-2 border-gray-200 px-4 py-2">{{ $item->created_at }}</td>
           </tr>
         </tbody>
         @endforeach
@@ -53,12 +52,12 @@
     @foreach ($items as $item)
     <tbody>
       <tr>
-        <td class="border-2 border-gray-200 px-4 py-2">{{ $item->id }}</td>
-        <td class="border-2 border-gray-200 px-4 py-2">{{ $item->product_name }}</td>
-        <td class="border-2 border-gray-200 px-4 py-2">{{ $item->arrival_source }}</td>
-        <td class="border-2 border-gray-200 px-4 py-2">{{ $item->manufacturer }}</td>
-        <td class="border-2 border-gray-200 px-8 py-2">{{ $item->price }}</td>
-        <td class="border-2 border-gray-200 px-4 py-2">{{ $item->created_at }}</td>
+        <td class="border-2 border-gray-200 px-4 py-2"><x-a-edit href="/edit/{{ $item->id }}">{{ $item->id }}</x-a-edit></td>
+        <td class="border-2 border-gray-200 px-4 py-2"><x-a-edit href="/edit/{{ $item->id }}">{{ $item->product_name }}</x-a-edit></td>
+        <td class="border-2 border-gray-200 px-4 py-2"><x-a-edit href="/edit/{{ $item->id }}">{{ $item->arrival_source }}</x-a-edit></td>
+        <td class="border-2 border-gray-200 px-4 py-2"><x-a-edit href="/edit/{{ $item->id }}">{{ $item->manufacturer }}</x-a-edit></td>
+        <td class="border-2 border-gray-200 px-8 py-2"><x-a-edit href="/edit/{{ $item->id }}">{{ $item->price }}</x-a-edit></td>
+        <td class="border-2 border-gray-200 px-4 py-2"><x-a-edit href="/edit/{{ $item->id }}">{{ $item->created_at }}</x-a-edit></td>
       </tr>
     </tbody>
     @endforeach
