@@ -35,8 +35,13 @@ class ProductManagementController extends Controller
   public function productRegister(ProductRegisterRequest $request)
   {
     $item = $request->only(['product_name', 'arrival_source', 'manufacturer', 'price']);
+    $mailTel = $request->only(['mail', 'tel']);
+    $info = [
+      'information' => date('m-d') . 'に' .$mailTel['mail'] . 'が商品登録を実施'
+    ];
+    $log = array_merge($mailTel, $info);
+
     $request->session()->put('item', $item);
-    $log = $request->only(['mail', 'tel']);
     $request->session()->put('log', $log);
 
     return redirect()->route('confirm');
@@ -46,6 +51,7 @@ class ProductManagementController extends Controller
   {
     $sesItem = $request->session()->get('item');
     $sesLog = $request->session()->get('log');
+    
     return view('confirm', compact('sesItem', 'sesLog'));
   }
 
@@ -53,15 +59,20 @@ class ProductManagementController extends Controller
   {
     $sesItem = $request->session()->get('item');
     $sesLog = $request->session()->get('log');
-    // dd($sesLog);
+
     if ($request->input('back') == 'back') {
       $regiInfo = array_merge($sesItem, $sesLog);
+
       return redirect('newadd')->withInput($regiInfo);
+
     } else {
       Item::create(['product_name' => $sesItem['product_name'], 'arrival_source' => $sesItem['arrival_source'], 'manufacturer' => $sesItem['manufacturer'], 'price' => $sesItem['price']]);
-      Log::create(['email' => $sesLog['mail'], 'tel' => $sesLog['tel']]);
+
+      Log::create(['email' => $sesLog['mail'], 'tel' => $sesLog['tel'], 'information' => $sesLog['information']]);
+
       $request->session()->forget('item');
       $request->session()->forget('log');
+
       return redirect()->route('complete');
     }
   }
@@ -85,6 +96,7 @@ class ProductManagementController extends Controller
   {
     $item = Item::find($id);
     $log = Log::find($id);
+
     return view('edit', compact('item', 'log'));
   }
 
@@ -155,6 +167,7 @@ class ProductManagementController extends Controller
   {
     $contact = $request->only(['name', 'mail', 'tel', 'contact']);
     $request->session()->put('contact', $contact);
+
     return redirect()->route('editConfirm');
   }
 
@@ -168,10 +181,12 @@ class ProductManagementController extends Controller
   {
     $sesContact = $request->session()->get('contact');
     if ($request->input('back') == 'back') {
+
       return redirect('contact')->withInput($sesContact);
     } else {
       Mail::to($sesContact['mail'])->send(new ContactMail($sesContact));
       Mail::to('naoki@gmail.com')->send(new ContactMail($sesContact));
+
       return redirect()->route('sendComplete');
     }
   }
