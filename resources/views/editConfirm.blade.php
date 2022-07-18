@@ -8,10 +8,6 @@
     <div>{{ $sesItem['manufacturer'] }}</div>
     <div class="mt-2">金額</div>
     <div>{{ $sesItem['price'] }}</div>
-    <div class="mt-2">メールアドレス</div>
-    <div>{{ $sesLog['mail'] }}</div>
-    <div class="mt-2">電話番号</div>
-    <div>{{ $sesLog['tel'] }}</div>
     <form action="{{ route('updateOrBack') }}" method="POST">
       @csrf
       <x-button>登録</x-button>
