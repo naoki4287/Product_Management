@@ -185,4 +185,9 @@ class ProductManagementController extends Controller
   {
     return view('mail');
   }
+
+  public function mypage()
+  {
+    return view('mypage');
+  }
 }
