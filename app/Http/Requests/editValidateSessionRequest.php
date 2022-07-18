@@ -32,8 +32,6 @@ class editValidateSessionRequest extends FormRequest
       'arrival_source' => 'required',
       'manufacturer' => 'required',
       'price' => 'required|integer',
-      'mail' => 'required|email',
-      'tel' => 'required|numeric',
     ];
   }
 
@@ -45,10 +43,6 @@ class editValidateSessionRequest extends FormRequest
       'manufacturer.required' => '製造元は必ず入力してください',
       'price.required' => '金額は必ず入力してください',
       'price.integer' => '金額は数値で入力してください',
-      'mail.required' => 'メールアドレスは必ず入力してください',
-      'mail.email' => '無効なメールアドレスです',
-      'tel.required' => '電話番号は必ず入力してください',
-      'tel.integer' => '電話番号は数値で入力してください',
     ];
   }
 }

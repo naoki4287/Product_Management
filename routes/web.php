@@ -35,5 +35,7 @@ Route::post('/sendOrBack', [ProductManagementController::class, 'sendOrBack'])->
 Route::post('/contactMail', [ProductManagementController::class, 'contactMail'])->name('contactMail');
 Route::get('/sendComplete', [ProductManagementController::class, 'sendComplete'])->name('sendComplete');
 Route::get('/mail', [ProductManagementController::class, 'mail'])->name('mail');
+Route::get('/mypage', [ProductManagementController::class, 'mypage'])->name('mypage');
+
 
 require __DIR__.'/auth.php';

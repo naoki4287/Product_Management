@@ -95,18 +95,14 @@ class ProductManagementController extends Controller
   public function edit($id)
   {
     $item = Item::find($id);
-    $log = Log::find($id);
 
-    return view('edit', compact('item', 'log'));
+    return view('edit', compact('item'));
   }
 
   public function editValidateSession(editValidateSessionRequest $request)
   {
     $item = $request->only(['itemId', 'product_name', 'arrival_source', 'manufacturer', 'price']);
-    $log = $request->only(['logId', 'mail', 'tel']);
-
     $request->session()->put('item', $item);
-    $request->session()->put('log', $log);
 
     return redirect()->route('editConfirm');
   }
@@ -114,20 +110,17 @@ class ProductManagementController extends Controller
   public function editConfirm(Request $request)
   {
     $sesItem = $request->session()->get('item');
-    $sesLog = $request->session()->get('log');
 
-    return view('editConfirm', compact('sesItem', 'sesLog'));
+    return view('editConfirm', compact('sesItem'));
   }
 
   public function updateOrBack(Request $request)
   {
     $sesItem = $request->session()->get('item');
-    $sesLog = $request->session()->get('log');
 
-    if ($request->input('back') == 'back') {
-      $sesItemLog = array_merge($sesItem, $sesLog);
+    if ($request->input('back') == 'back') {;
 
-      return redirect()->route('edit', ['id' => $sesItem['itemId']])->withInput($sesItemLog);
+      return redirect()->route('edit', ['id' => $sesItem['itemId']])->withInput($sesItem);
 
     } else {
       DB::table('items')
@@ -138,16 +131,8 @@ class ProductManagementController extends Controller
           'manufacturer' => $sesItem['manufacturer'],
           'price' => $sesItem['price']
       ]);
-
-      DB::table('logs')
-        ->where('id', $sesLog['logId'])
-        ->update([
-          'email' => $sesLog['mail'],
-          'tel' => $sesLog['tel'],
-      ]);
       
       $request->session()->forget('item');
-      $request->session()->forget('log');
 
       return redirect()->route('updateComplete');
     }
@@ -199,5 +184,10 @@ class ProductManagementController extends Controller
   public function mail()
   {
     return view('mail');
+  }
+
+  public function mypage()
+  {
+    return view('mypage');
   }
 }
