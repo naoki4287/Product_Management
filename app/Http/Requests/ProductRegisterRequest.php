@@ -48,7 +48,7 @@ class ProductRegisterRequest extends FormRequest
       'mail.required' => 'メールアドレスは必ず入力してください',
       'mail.email' => '無効なメールアドレスです',
       'tel.required' => '電話番号は必ず入力してください',
-      'tel.integer' => '電話番号は数値で入力してください',
+      'tel.numeric' => '電話番号は数値で入力してください',
     ];
   }
 }
