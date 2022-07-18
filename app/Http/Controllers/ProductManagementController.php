@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\contactValidateSessionRequest;
+use App\Http\Requests\editValidateSessionRequest;
 use App\Http\Requests\ProductRegisterRequest;
 use App\Mail\ContactMail;
 use App\Models\Item;
@@ -23,7 +24,6 @@ class ProductManagementController extends Controller
     $items = DB::table('items')
       ->where('deleted_at', '=', NULL)
       ->paginate(5);
-    // dd($items);
     return view('list', compact('items'));
   }
 
@@ -46,7 +46,6 @@ class ProductManagementController extends Controller
   {
     $sesItem = $request->session()->get('item');
     $sesLog = $request->session()->get('log');
-    // dd($sesLog);
     return view('confirm', compact('sesItem', 'sesLog'));
   }
 
@@ -76,7 +75,6 @@ class ProductManagementController extends Controller
   {
     $deleteItems = $request->itemId;
     for ($i = 0; $i < count($deleteItems); $i++) {
-      intval($deleteItems[$i]);
       Item::find($deleteItems[$i])->delete();
     }
 
@@ -87,13 +85,65 @@ class ProductManagementController extends Controller
   {
     $item = Item::find($id);
     $log = Log::find($id);
-    // dd($log);
     return view('edit', compact('item', 'log'));
   }
 
-  public function update(Request $request)
+  public function editValidateSession(editValidateSessionRequest $request)
   {
-   
+    $item = $request->only(['itemId', 'product_name', 'arrival_source', 'manufacturer', 'price']);
+    $log = $request->only(['logId', 'mail', 'tel']);
+
+    $request->session()->put('item', $item);
+    $request->session()->put('log', $log);
+
+    return redirect()->route('editConfirm');
+  }
+
+  public function editConfirm(Request $request)
+  {
+    $sesItem = $request->session()->get('item');
+    $sesLog = $request->session()->get('log');
+
+    return view('editConfirm', compact('sesItem', 'sesLog'));
+  }
+
+  public function updateOrBack(Request $request)
+  {
+    $sesItem = $request->session()->get('item');
+    $sesLog = $request->session()->get('log');
+
+    if ($request->input('back') == 'back') {
+      $sesItemLog = array_merge($sesItem, $sesLog);
+
+      return redirect()->route('edit', ['id' => $sesItem['itemId']])->withInput($sesItemLog);
+
+    } else {
+      DB::table('items')
+        ->where('id', $sesItem['itemId'])
+        ->update([
+          'product_name' => $sesItem['product_name'],
+          'arrival_source' => $sesItem['arrival_source'],
+          'manufacturer' => $sesItem['manufacturer'],
+          'price' => $sesItem['price']
+      ]);
+
+      DB::table('logs')
+        ->where('id', $sesLog['logId'])
+        ->update([
+          'email' => $sesLog['mail'],
+          'tel' => $sesLog['tel'],
+      ]);
+      
+      $request->session()->forget('item');
+      $request->session()->forget('log');
+
+      return redirect()->route('updateComplete');
+    }
+  }
+
+  public function updateComplete()
+  {
+    return view('updateComplete');
   }
 
   public function contact()
@@ -105,7 +155,7 @@ class ProductManagementController extends Controller
   {
     $contact = $request->only(['name', 'mail', 'tel', 'contact']);
     $request->session()->put('contact', $contact);
-    return redirect()->route('contactConfirm');
+    return redirect()->route('editConfirm');
   }
 
   public function contactConfirm(Request $request)
@@ -117,7 +167,6 @@ class ProductManagementController extends Controller
   public function sendOrBack(Request $request)
   {
     $sesContact = $request->session()->get('contact');
-    // dd($sesContact);
     if ($request->input('back') == 'back') {
       return redirect('contact')->withInput($sesContact);
     } else {

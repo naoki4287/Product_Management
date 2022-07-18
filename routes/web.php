@@ -24,7 +24,10 @@ Route::post('/storeOrBack', [ProductManagementController::class, 'storeOrBack'])
 Route::get('/complete', [ProductManagementController::class, 'complete'])->name('complete');
 Route::post('/delete', [ProductManagementController::class, 'delete'])->name('delete');
 Route::get('/edit/{id}', [ProductManagementController::class, 'edit'])->name('edit');
-Route::post('/update', [ProductManagementController::class, 'update'])->name('update');
+Route::post('/editValidateSession', [ProductManagementController::class, 'editValidateSession'])->name('editValidateSession');
+Route::get('/editConfirm', [ProductManagementController::class, 'editConfirm'])->name('editConfirm');
+Route::post('/updateOrBack', [ProductManagementController::class, 'updateOrBack'])->name('updateOrBack');
+Route::get('/updateComplete', [ProductManagementController::class, 'updateComplete'])->name('updateComplete');
 Route::get('/contact', [ProductManagementController::class, 'contact'])->name('contact');
 Route::post('/contactValidateSession', [ProductManagementController::class, 'contactValidateSession'])->name('contactValidateSession');
 Route::get('/contactConfirm', [ProductManagementController::class, 'contactConfirm'])->name('contactConfirm');
