@@ -17,7 +17,7 @@ return new class extends Migration
       $table->unsignedBigInteger('id', true);
       $table->string('email');
       $table->string('tel');
-      $table->string('infomation');
+      $table->string('information')->nullable();
     });
   }
 

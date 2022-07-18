@@ -18,37 +18,37 @@ class LogSeeder extends Seeder
     DB::table('logs')->insert([
       'email' => 'syogo@gmail.com',
       'tel' => '08011112222',
-      'infomation' => '7/1にsyogo@gmail.comが商品登録を実施',
+      'information' => '7/1にsyogo@gmail.comが商品登録を実施',
     ]);
     
     DB::table('logs')->insert([
       'email' => 'kenta@gmail.com',
       'tel' => '08033332222',
-      'infomation' => '7/1にkenta@gmail.comが商品登録を実施',
+      'information' => '7/1にkenta@gmail.comが商品登録を実施',
     ]);
 
     DB::table('logs')->insert([
       'email' => 'syun@gmail.com',
       'tel' => '08044442222',
-      'infomation' => '7/1にsyun@gmail.comが商品登録を実施',
+      'information' => '7/1にsyun@gmail.comが商品登録を実施',
     ]);
 
     DB::table('logs')->insert([
       'email' => 'naoya@gmail.com',
       'tel' => '08055552222',
-      'infomation' => '7/1にnaoya@gmail.comが商品登録を実施',
+      'information' => '7/1にnaoya@gmail.comが商品登録を実施',
     ]);
 
     DB::table('logs')->insert([
       'email' => 'hiroyuki@gmail.com',
       'tel' => '08066662222',
-      'infomation' => '7/1にhiroyuki@gmail.comが商品登録を実施',
+      'information' => '7/1にhiroyuki@gmail.comが商品登録を実施',
     ]);
 
     DB::table('logs')->insert([
       'email' => 'takuya@gmail.com',
       'tel' => '08077772222',
-      'infomation' => '7/1にtakuya@gmail.comが商品登録を実施',
+      'information' => '7/1にtakuya@gmail.comが商品登録を実施',
     ]);
 
   }

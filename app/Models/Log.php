@@ -12,7 +12,7 @@ class Log extends Model
     protected $fillable = [
       'email',
       'tel',
-      'infomation'
+      'information'
     ];
 
     public $timestamps = false;
