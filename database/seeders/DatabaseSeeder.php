@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Log;
 use App\Models\User;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -20,6 +21,7 @@ class DatabaseSeeder extends Seeder
     $this->call([
       // UserSeeder::class,
       ItemSeeder::class,
+      LogSeeder::class
     ]);
 
     // factoryを使う場合
