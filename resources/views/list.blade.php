@@ -47,6 +47,7 @@
           <th class="border-2 border-gray-200 px-4 py-2">製造元</th>
           <th class="border-2 border-gray-200 px-4 py-2">金額</th>
           <th class="border-2 border-gray-200 px-4 py-2">作成日</th>
+          <th class="border-2 border-gray-200 px-4 py-2">お気に入り</th>
         </tr>
       </thead>
     @foreach ($items as $item)
@@ -58,6 +59,11 @@
         <td class="border-2 border-gray-200 px-4 py-2"><x-a-edit href="/edit/{{ $item->id }}">{{ $item->manufacturer }}</x-a-edit></td>
         <td class="border-2 border-gray-200 px-8 py-2"><x-a-edit href="/edit/{{ $item->id }}">{{ $item->price }}</x-a-edit></td>
         <td class="border-2 border-gray-200 px-4 py-2"><x-a-edit href="/edit/{{ $item->id }}">{{ $item->created_at }}</x-a-edit></td>
+        <form action="{{ route('favorite') }}" method="POST">
+          @csrf
+          <input type="hidden" name="favorite" value="{{ $item->id }}">
+          <td class="border-2 border-gray-200 px-4 py-2 text-center"><button class="favorite text-white text-2xl" type="submit">★</button></td>
+        </form>
       </tr>
     </tbody>
     @endforeach
