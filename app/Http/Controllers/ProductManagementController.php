@@ -6,9 +6,11 @@ use App\Http\Requests\contactValidateSessionRequest;
 use App\Http\Requests\editValidateSessionRequest;
 use App\Http\Requests\ProductRegisterRequest;
 use App\Mail\ContactMail;
+use App\Models\Favorite;
 use App\Models\Item;
 use App\Models\Log;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
@@ -22,9 +24,18 @@ class ProductManagementController extends Controller
   public function list()
   {
     $items = DB::table('items')
-      ->where('deleted_at', '=', NULL)
-      ->paginate(5);
-    return view('list', compact('items'));
+    ->where('deleted_at', '=', NULL)
+    ->paginate(5);
+
+    $favorites = DB::table('items')
+      ->join('favorites', 'items.id', '=', 'favorites.product_id')
+      ->select('items.*', 'favorites.product_id')
+      ->where('user_id', '=', Auth::id())
+      ->where('items.deleted_at', '=', NULL)
+      ->orderBy('items.id', 'ASC')
+      ->get();
+    
+    return view('list', compact('items', 'favorites'));
   }
 
   public function newadd()
@@ -188,6 +199,40 @@ class ProductManagementController extends Controller
 
   public function mypage()
   {
-    return view('mypage');
+    $favorites = DB::table('items')
+      ->join('favorites', 'items.id', '=', 'favorites.product_id')
+      ->select('items.*', 'favorites.*')
+      ->where('user_id', '=', Auth::id())
+      ->where('favorites.deleted_at', '=', NULL)
+      ->orderBy('favorites.created_at', 'DESC')
+      ->get();
+
+    return view('mypage', compact('favorites'));
+  }
+
+  public function favorite(Request $request)
+  {
+    $favoriteId = $request->favorite;
+    
+    $favoriteItem = DB::table('items')
+      ->join('favorites', 'items.id', '=', 'favorites.product_id')
+      ->select('items.*', 'favorites.*')
+      ->where('user_id', '=', Auth::id())
+      ->where('product_id', '=', $favoriteId)
+      ->first();
+
+    if($favoriteItem === null) {
+      Favorite::create(['user_id' => Auth::id(), 'product_id' => $favoriteId]);
+    } elseif($favoriteItem->deleted_at) {
+      DB::table('favorites')
+      ->where('product_id', $favoriteId)
+      ->update([
+        'deleted_at' => NULL
+      ]);
+    } else {
+      Favorite::find($favoriteItem->product_id)->delete();
+    }
+    
+    return back();
   }
 }
