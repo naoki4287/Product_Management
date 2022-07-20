@@ -24,8 +24,8 @@ class ProductManagementController extends Controller
   public function list()
   {
     $items = DB::table('items')
-    ->where('deleted_at', '=', NULL)
-    ->paginate(5);
+      ->where('deleted_at', '=', NULL)
+      ->paginate(5);
 
     $favorites = DB::table('items')
       ->join('favorites', 'items.id', '=', 'favorites.product_id')
@@ -34,7 +34,7 @@ class ProductManagementController extends Controller
       ->where('items.deleted_at', '=', NULL)
       ->orderBy('items.id', 'ASC')
       ->get();
-    
+
     return view('list', compact('items', 'favorites'));
   }
 
@@ -48,7 +48,7 @@ class ProductManagementController extends Controller
     $item = $request->only(['product_name', 'arrival_source', 'manufacturer', 'price']);
     $mailTel = $request->only(['mail', 'tel']);
     $info = [
-      'information' => date('m-d') . 'に' .$mailTel['mail'] . 'が商品登録を実施'
+      'information' => date('m-d') . 'に' . $mailTel['mail'] . 'が商品登録を実施'
     ];
     $log = array_merge($mailTel, $info);
 
@@ -62,7 +62,7 @@ class ProductManagementController extends Controller
   {
     $sesItem = $request->session()->get('item');
     $sesLog = $request->session()->get('log');
-    
+
     return view('confirm', compact('sesItem', 'sesLog'));
   }
 
@@ -75,7 +75,6 @@ class ProductManagementController extends Controller
       $regiInfo = array_merge($sesItem, $sesLog);
 
       return redirect('newadd')->withInput($regiInfo);
-
     } else {
       Item::create(['product_name' => $sesItem['product_name'], 'arrival_source' => $sesItem['arrival_source'], 'manufacturer' => $sesItem['manufacturer'], 'price' => $sesItem['price']]);
 
@@ -132,7 +131,6 @@ class ProductManagementController extends Controller
     if ($request->input('back') == 'back') {;
 
       return redirect()->route('edit', ['id' => $sesItem['itemId']])->withInput($sesItem);
-
     } else {
       DB::table('items')
         ->where('id', $sesItem['itemId'])
@@ -141,8 +139,8 @@ class ProductManagementController extends Controller
           'arrival_source' => $sesItem['arrival_source'],
           'manufacturer' => $sesItem['manufacturer'],
           'price' => $sesItem['price']
-      ]);
-      
+        ]);
+
       $request->session()->forget('item');
 
       return redirect()->route('updateComplete');
@@ -161,10 +159,10 @@ class ProductManagementController extends Controller
 
   public function contactValidateSession(contactValidateSessionRequest $request)
   {
-    $contact = $request->only(['name', 'mail', 'tel', 'contact']);
+    $contact = $request->only(['name', 'mail', 'tel', 'syumi', 'tokugi', 'contact']);
     $request->session()->put('contact', $contact);
 
-    return redirect()->route('editConfirm');
+    return redirect()->route('contactConfirm');
   }
 
   public function contactConfirm(Request $request)
@@ -177,7 +175,6 @@ class ProductManagementController extends Controller
   {
     $sesContact = $request->session()->get('contact');
     if ($request->input('back') == 'back') {
-
       return redirect('contact')->withInput($sesContact);
     } else {
       Mail::to($sesContact['mail'])->send(new ContactMail($sesContact));
@@ -213,7 +210,7 @@ class ProductManagementController extends Controller
   public function favorite(Request $request)
   {
     $favoriteId = $request->favorite;
-    
+
     $favoriteItem = DB::table('items')
       ->join('favorites', 'items.id', '=', 'favorites.product_id')
       ->select('items.*', 'favorites.*')
@@ -221,18 +218,18 @@ class ProductManagementController extends Controller
       ->where('product_id', '=', $favoriteId)
       ->first();
 
-    if($favoriteItem === null) {
+    if ($favoriteItem === null) {
       Favorite::create(['user_id' => Auth::id(), 'product_id' => $favoriteId]);
-    } elseif($favoriteItem->deleted_at) {
+    } elseif ($favoriteItem->deleted_at) {
       DB::table('favorites')
-      ->where('product_id', $favoriteId)
-      ->update([
-        'deleted_at' => NULL
-      ]);
+        ->where('product_id', $favoriteId)
+        ->update([
+          'deleted_at' => NULL
+        ]);
     } else {
       Favorite::find($favoriteItem->product_id)->delete();
     }
-    
+
     return back();
   }
 }
