@@ -62,7 +62,7 @@
         <form action="{{ route('favorite') }}" method="POST">
           @csrf
           <input type="hidden" name="favorite" value="{{ $item->id }}">
-          @if ($item->product_id && $item->deleted_at === NULL)
+          @if ($item->deleted_at === NULL)
           <td class="border-2 border-gray-200 px-4 py-2 text-center"><button class="favorite text-red-500 text-2xl" type="submit">★</button></td>
           @else
           <td class="border-2 border-gray-200 px-4 py-2 text-center"><button class="favorite text-white text-2xl" type="submit">★</button></td>
@@ -73,6 +73,7 @@
     @endforeach
     </table>
     <x-button class="bg-red-700 hover:bg-red-600 mt-8 ml-8" id="delModalOpen">削除</x-button>
+    <x-button>カートに入れる</x-button>
     <div class="link mt-12 flex justify-center">
       {{ $items->links() }}
     </div>
