@@ -62,7 +62,11 @@
         <form action="{{ route('favorite') }}" method="POST">
           @csrf
           <input type="hidden" name="favorite" value="{{ $item->id }}">
+          @if ($item->product_id && $item->deleted_at === NULL)
+          <td class="border-2 border-gray-200 px-4 py-2 text-center"><button class="favorite text-red-500 text-2xl" type="submit">★</button></td>
+          @else
           <td class="border-2 border-gray-200 px-4 py-2 text-center"><button class="favorite text-white text-2xl" type="submit">★</button></td>
+          @endif
         </form>
       </tr>
     </tbody>
