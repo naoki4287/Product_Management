@@ -24,18 +24,13 @@ class ProductManagementController extends Controller
   public function list()
   {
     $items = DB::table('items')
-      ->where('deleted_at', '=', NULL)
-      ->paginate(5);
-
-    $favorites = DB::table('items')
-      ->join('favorites', 'items.id', '=', 'favorites.product_id')
-      ->select('items.*', 'favorites.product_id')
-      ->where('user_id', '=', Auth::id())
+      ->leftjoin('favorites', 'items.id', '=', 'favorites.product_id')
+      ->select('items.*', 'items.deleted_at', 'favorites.product_id', 'favorites.deleted_at')
       ->where('items.deleted_at', '=', NULL)
       ->orderBy('items.id', 'ASC')
-      ->get();
-
-    return view('list', compact('items', 'favorites'));
+      ->paginate(5);
+      
+    return view('list', compact('items'));
   }
 
   public function newadd()
@@ -227,7 +222,7 @@ class ProductManagementController extends Controller
           'deleted_at' => NULL
         ]);
     } else {
-      Favorite::find($favoriteItem->product_id)->delete();
+      Favorite::find($favoriteItem->id)->delete();
     }
 
     return back();
