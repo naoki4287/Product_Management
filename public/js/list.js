@@ -1,7 +1,5 @@
 "use strict";
 
-// const { inArray } = require("jquery");
-
 const cancel = document.getElementById("cancel");
 const delModalOpen = document.getElementById("delModalOpen");
 const deleteModal = document.getElementById("deleteModal");
@@ -20,8 +18,6 @@ cancel.addEventListener("click", () => {
 
 // checkboxをクリックするたびにクリックされたcheckboxにidがついているか確認し、ついていれば削除し、ついていなければidを付与する
 $(".checkbox").on("click", function () {
-    // console.log($(this).attr("value"));
-    // console.log($(this).attr("id"));
     if ($(this).attr("id") === undefined) {
         let id = $(this).attr("value");
         $(this).attr("id", id);
@@ -42,17 +38,7 @@ $("#cartBtn").on("click", function () {
         return id;
     });
 
-    // const cartItems = items.filter((item, checkedItemsIds, index) => {
-    //     return item.data[index].id === checkedItemsIds[index];
-    // });
-
-    // const cartItems = items.map((item, checkedItemsIds, index) => {
-    //     if ($.inArray(checkedItemsIds[index], item)) {
-    //       return item;
-    //     }
-    // });
     console.log(checkedItemsIds);
-    // console.log(cartItems);
 
     $.ajax({
         headers: {
@@ -66,12 +52,10 @@ $("#cartBtn").on("click", function () {
     })
         //通信が成功したとき
         .done((res) => {
-            // console.log(res.message);
             console.log("カートに入れました");
         })
         //通信が失敗したとき
         .fail((error) => {
-            // console.log(error.statusText);
             console.log("失敗しました");
         });
 });
