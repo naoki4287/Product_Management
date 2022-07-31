@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductManagementController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,5 +39,7 @@ Route::get('/mail', [ProductManagementController::class, 'mail'])->name('mail');
 Route::get('/mypage', [ProductManagementController::class, 'mypage'])->name('mypage');
 Route::post('/favorite', [ProductManagementController::class, 'favorite'])->name('favorite');
 
+Route::post('/addCart', [CartController::class, 'addCart'])->name('addCart');
+Route::get('/cart', [CartController::class, 'cart'])->name('cart');
 
 require __DIR__.'/auth.php';
