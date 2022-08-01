@@ -29,7 +29,7 @@ class ProductManagementController extends Controller
       ->where('i.deleted_at', '=', NULL)
       ->orderBy('i.id', 'ASC')
       ->paginate(5);
-      // dd($items);
+
     return view('list', compact('items'));
   }
 
