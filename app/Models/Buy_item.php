@@ -7,5 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Buy_item extends Model
 {
-    use HasFactory;
+  use HasFactory;
+
+  protected $guarded = [
+    'created_at',
+  ];
+
+  public $timestamps = false;
 }

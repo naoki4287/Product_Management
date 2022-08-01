@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Buy_item;
 use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,5 +41,26 @@ class CartController extends Controller
   {
     Cart::find($request->cartItemId)->delete();
     return back();
+  }
+
+  public function buy()
+  {
+    $cartInItems = DB::table('items')
+      ->join('carts', 'items.id', '=', 'carts.product_id')
+      ->select('items.*', 'carts.*', 'items.id', 'carts.id as cart_id')
+      ->where('carts.user_id', '=', Auth::id())
+      ->orderBy('carts.id', 'DESC')
+      ->get();
+
+    for ($i = 0; $i < count($cartInItems); $i++) {
+      $buy_item = new Buy_item();
+      $buy_item->user_id = Auth::id();
+      $buy_item->product_id = $cartInItems[$i]->id;
+      $buy_item->item_num = $cartInItems[$i]->item_num;
+      $buy_item->save();
+      Cart::find($cartInItems[$i]->cart_id)->delete();
+    }
+
+    return redirect()->route('list');
   }
 }

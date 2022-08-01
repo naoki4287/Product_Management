@@ -29,7 +29,7 @@
         @if (count($cartInItems))
         <div>{{ count($cartInItems) }}点の商品</div>
         <div id="cartInItemSum"></div>
-        <form action="" method="POST">
+        <form action="{{ route('buy') }}" method="POST">
           @csrf
           <div id="sum"></div>
           <div>
