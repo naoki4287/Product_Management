@@ -7,5 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cart extends Model
 {
-    use HasFactory;
+  use HasFactory;
+
+  protected $guarded = [
+    'created_at',
+    'deleted_at',
+  ];
+
+  public $timestamps = false;
 }
