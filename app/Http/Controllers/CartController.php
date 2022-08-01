@@ -37,7 +37,7 @@ class CartController extends Controller
 
     $cartInItems = DB::table('items')
       ->join('carts', 'items.id', '=', 'carts.product_id')
-      ->select('items.*', 'carts.*')
+      ->select('items.*', 'carts.*', 'items.id', 'carts.id as cart_id')
       ->where('carts.user_id', '=', Auth::id())
       ->orderBy('carts.id', 'DESC')
       ->limit($cartInItemsNum)
@@ -45,5 +45,11 @@ class CartController extends Controller
     // dd($cartInItems);
     // $request->session()->forget('cartInItemsNum');
     return view('cart', compact('cartInItems'));
+  }
+
+  public function cartDelete(Request $request)
+  {
+    Cart::find($request->cartItemId)->delete();
+    return back();
   }
 }

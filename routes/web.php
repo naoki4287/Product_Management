@@ -41,5 +41,7 @@ Route::post('/favorite', [ProductManagementController::class, 'favorite'])->name
 
 Route::post('/addCart', [CartController::class, 'addCart'])->name('addCart');
 Route::get('/cart', [CartController::class, 'cart'])->name('cart');
+Route::post('/cartDelete', [CartController::class, 'cartDelete'])->name('cartDelete');
+
 
 require __DIR__.'/auth.php';
