@@ -45,16 +45,6 @@ for (let i = 0; i < select.length; i++) {
 }
 
 $("#cartBtn").on("click", function () {
-    // const checkedItems = checkboxes.filter((cbox) => {
-    //     return cbox.checked === true;
-    // });
-
-    // const checkedItemsIds = checkedItems.map((checkedItem) => {
-    //     let id = checkedItem.getAttribute("id");
-    //     return id;
-    // });
-    // console.log(checkedItemsIds);
-
     const selectedItems = selects.filter((select) => {
         return select.value !== "";
     });
@@ -69,9 +59,6 @@ $("#cartBtn").on("click", function () {
           return num;
       });
 
-    console.log(selectedItems);
-    console.log(selectedItemsIds);
-    console.log(selectedItemsNum);
 
     $.ajax({
         headers: {

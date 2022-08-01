@@ -131,6 +131,5 @@
   <script type="module" src="{{ asset('js/list.js') }}"></script>
   <script>
     const itemsList = @json($items);
-    // console.log(items.data[0].id);
   </script>
 </x-app-layout>
