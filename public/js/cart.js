@@ -29,6 +29,6 @@ const priceSum = Array.from(itemSum);
     }, 0);
 
     const totalComma = total.toLocaleString();
-    sum.textContent = `￥${totalComma}円`;
+    sum.textContent = `￥${totalComma}`;
 }
 
