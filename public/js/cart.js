@@ -14,7 +14,7 @@ const priceSum = Array.from(itemSum);
     const quantity = num.reduce((sum, num) => {
         return sum + num;
     });
-    console.log(quantity);
+    
     cartInItemSum.textContent = `合計：${quantity}個`;
 }
 
