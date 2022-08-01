@@ -106,7 +106,7 @@
           <form action="{{ route('favorite') }}" method="POST">
             @csrf
             <input type="hidden" name="favorite" value="{{ $item->id }}">
-            @if ($item->deleted_at === null && $item->product_id !== null)
+            @if ($item->fDel_at === null && $item->product_id !== null)
             <td class="border-2 border-gray-200 px-4 py-2 text-center"><button class="favorite text-red-500 text-2xl"
                 type="submit">★</button></td>
             @else
@@ -121,8 +121,9 @@
     </table>
     <x-button class="bg-red-700 hover:bg-red-600 mt-8 ml-8" id="delModalOpen">削除</x-button>
     <input class="cartItemId" type="hidden" name="cartItemId[]" id="cartItemId" value="">
-    <x-button class="ml-8" id="cartBtn">カートに入れる</x-button>
-    <x-button class="mt-8 ml-8" onclick="location.href='{{ route('cart') }}'">カートへ移動する</x-button>
+    <x-button class="hover:bg-gray-700 ml-8" id="cartBtn">カートに入れる</x-button>
+    <x-button class="bg-green-600 hover:bg-green-500 mt-8 ml-8" onclick="location.href='{{ route('cart') }}'">カートへ移動する
+    </x-button>
 
     <div class="link mt-12 flex justify-center">
       {{ $items->links() }}
@@ -131,6 +132,5 @@
   <script type="module" src="{{ asset('js/list.js') }}"></script>
   <script>
     const itemsList = @json($items);
-    // console.log(items.data[0].id);
   </script>
 </x-app-layout>

@@ -23,13 +23,13 @@ class ProductManagementController extends Controller
 
   public function list()
   {
-    $items = DB::table('items')
-      ->leftjoin('favorites', 'items.id', '=', 'favorites.product_id')
-      ->select('items.*', 'items.deleted_at', 'favorites.product_id', 'favorites.deleted_at')
-      ->where('items.deleted_at', '=', NULL)
-      ->orderBy('items.id', 'ASC')
+    $items = DB::table('items as i')
+      ->leftjoin('favorites as f', 'i.id', '=', 'f.product_id')
+      ->select('i.*', 'i.deleted_at', 'f.product_id', 'f.deleted_at as fDel_at')
+      ->where('i.deleted_at', '=', NULL)
+      ->orderBy('i.id', 'ASC')
       ->paginate(5);
-      
+
     return view('list', compact('items'));
   }
 
