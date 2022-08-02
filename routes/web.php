@@ -52,6 +52,7 @@ Route::group(['prefix' => 'cart'], function () {
 
 Route::group(['prefix' => 'shippingDestination'], function () {
   Route::get('/', [shippingDestinationController::class, 'index'])->name('shippingDestination.index');
+  Route::post('/delete', [shippingDestinationController::class, 'delete'])->name('shippingDestination.delete');
 });
 
 require __DIR__ . '/auth.php';
