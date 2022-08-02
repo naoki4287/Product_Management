@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\contactValidateSessionRequest;
+use App\Http\Requests\editValidateSessionRequest;
 use App\Http\Requests\ProductRegisterRequest;
 use App\Mail\ContactMail;
 use App\Models\Favorite;
@@ -52,6 +53,52 @@ class ProductManagementController extends Controller
     return redirect()->route('confirm');
   }
 
+  public function edit($id)
+  {
+    $item = Item::find($id);
+
+    return view('edit', compact('item'));
+  }
+
+  public function editValidateSession(editValidateSessionRequest $request)
+  {
+    $item = $request->only(['itemId', 'product_name', 'arrival_source', 'manufacturer', 'price']);
+    $request->session()->put('item', $item);
+
+    return redirect()->route('editConfirm');
+  }
+
+  public function editConfirm(Request $request)
+  {
+    $sesItem = $request->session()->get('item');
+
+    return view('editConfirm', compact('sesItem'));
+  }
+
+  public function update(Request $request)
+  {
+    $sesItem = $request->session()->get('item');
+
+    DB::table('items')
+      ->where('id', $sesItem['itemId'])
+      ->update([
+        'product_name' => $sesItem['product_name'],
+        'arrival_source' => $sesItem['arrival_source'],
+        'manufacturer' => $sesItem['manufacturer'],
+        'price' => $sesItem['price']
+      ]);
+
+    $request->session()->forget('item');
+
+    return redirect()->route('updateComplete');
+  }
+
+  public function updateComplete()
+  {
+    return view('updateComplete');
+  }
+
+
   public function confirm(Request $request)
   {
     $sesItem = $request->session()->get('item');
@@ -96,7 +143,7 @@ class ProductManagementController extends Controller
     return back();
   }
 
-  
+
 
   public function contact()
   {
