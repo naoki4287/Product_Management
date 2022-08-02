@@ -57,7 +57,7 @@ $("#cartBtn").on("click", function () {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         type: "post",
-        url: "/addCart",
+        url: "cart/add",
         data: {
             selectedItemsIds: selectedItemsIds,
             selectedItemsNum: selectedItemsNum,

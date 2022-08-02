@@ -13,7 +13,7 @@
         <div class="inline-block ">{{ $cartInItem->item_num }}</div><br>
         <label>商品合計:</label>
         <div class="itemSum inline-block">{{ $cartInItem->price * $cartInItem->item_num }}</div>
-        <form action="{{ route('cartDelete') }}" method="POST">
+        <form action="{{ route('delete') }}" method="POST">
           @csrf
           <div class="flex justify-end">
             <input type="hidden" name="cartItemId" value="{{ $cartInItem->cart_id }}">

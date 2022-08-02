@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\contactValidateSessionRequest;
-use App\Http\Requests\editValidateSessionRequest;
 use App\Http\Requests\ProductRegisterRequest;
 use App\Mail\ContactMail;
 use App\Models\Favorite;
@@ -33,9 +32,9 @@ class ProductManagementController extends Controller
     return view('list', compact('items'));
   }
 
-  public function newadd()
+  public function add()
   {
-    return view('newadd');
+    return view('add');
   }
 
   public function productRegister(ProductRegisterRequest $request)
@@ -97,55 +96,7 @@ class ProductManagementController extends Controller
     return back();
   }
 
-  public function edit($id)
-  {
-    $item = Item::find($id);
-
-    return view('edit', compact('item'));
-  }
-
-  public function editValidateSession(editValidateSessionRequest $request)
-  {
-    $item = $request->only(['itemId', 'product_name', 'arrival_source', 'manufacturer', 'price']);
-    $request->session()->put('item', $item);
-
-    return redirect()->route('editConfirm');
-  }
-
-  public function editConfirm(Request $request)
-  {
-    $sesItem = $request->session()->get('item');
-
-    return view('editConfirm', compact('sesItem'));
-  }
-
-  public function updateOrBack(Request $request)
-  {
-    $sesItem = $request->session()->get('item');
-
-    if ($request->input('back') == 'back') {;
-
-      return redirect()->route('edit', ['id' => $sesItem['itemId']])->withInput($sesItem);
-    } else {
-      DB::table('items')
-        ->where('id', $sesItem['itemId'])
-        ->update([
-          'product_name' => $sesItem['product_name'],
-          'arrival_source' => $sesItem['arrival_source'],
-          'manufacturer' => $sesItem['manufacturer'],
-          'price' => $sesItem['price']
-        ]);
-
-      $request->session()->forget('item');
-
-      return redirect()->route('updateComplete');
-    }
-  }
-
-  public function updateComplete()
-  {
-    return view('updateComplete');
-  }
+  
 
   public function contact()
   {
@@ -218,9 +169,7 @@ class ProductManagementController extends Controller
     } elseif ($favoriteItem->deleted_at) {
       DB::table('favorites')
         ->where('product_id', $favoriteId)
-        ->update([
-          'deleted_at' => NULL
-        ]);
+        ->update(['deleted_at' => NULL]);
     } else {
       Favorite::find($favoriteItem->id)->delete();
     }
