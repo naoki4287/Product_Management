@@ -27,4 +27,29 @@ class shippingDestinationController extends Controller
 
     return back();
   }
+
+  public function register()
+  {
+    return view('shippingDestination.register');
+  }
+
+  public function validateSssion()
+  {
+    return redirect()->route('sd.confirm');
+  }
+
+  public function confirm()
+  {
+    return view('shippingDestination.confirm');
+  }
+
+  public function store()
+  {
+    // return
+  }
+
+  public function complete()
+  {
+    return view('shippingDestination.complete');
+  }
 }

@@ -44,15 +44,18 @@ Route::get('/mypage', [ProductManagementController::class, 'mypage'])->name('myp
 Route::post('/favorite', [ProductManagementController::class, 'favorite'])->name('favorite');
 
 Route::group(['prefix' => 'cart'], function () {
-  Route::post('/add', [CartController::class, 'add'])->name('add');
+  Route::post('/add', [CartController::class, 'add'])->name('cart.add');
   Route::get('/', [CartController::class, 'cart'])->name('cart');
-  Route::post('/delete', [CartController::class, 'delete'])->name('delete');
+  Route::post('/delete', [CartController::class, 'delete'])->name('cart.delete');
   Route::post('/buy', [CartController::class, 'buy'])->name('buy');
 });
 
 Route::group(['prefix' => 'shippingDestination'], function () {
-  Route::get('/', [shippingDestinationController::class, 'index'])->name('shippingDestination.index');
-  Route::post('/delete', [shippingDestinationController::class, 'delete'])->name('shippingDestination.delete');
+  Route::get('/', [shippingDestinationController::class, 'index'])->name('sd.index');
+  Route::post('/delete', [shippingDestinationController::class, 'delete'])->name('sd.delete');
+  Route::get('/register', [shippingDestinationController::class, 'register'])->name('sd.register');
+  Route::post('/store', [shippingDestinationController::class, 'store'])->name('sd.store');
+  Route::get('/complete', [shippingDestinationController::class, 'complete'])->name('sd.complete');
 });
 
 require __DIR__ . '/auth.php';

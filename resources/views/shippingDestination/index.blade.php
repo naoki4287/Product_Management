@@ -1,7 +1,7 @@
 <x-app-layout>
   <div class="">
     <div class="hidden w-11/12 bg-indigo-300 absolute top-20 right-10 left-10 z-10" id="deleteModal">
-      <form action="{{ route('shippingDestination.delete') }}" method="POST">
+      <form action="{{ route('sd.delete') }}" method="POST">
         @csrf
         <table class="w-11/12 mx-auto my-10 border-2 border-gray-300">
           <thead>
