@@ -8,10 +8,10 @@
     <div>{{ $sesItem['manufacturer'] }}</div>
     <div class="mt-2">金額</div>
     <div>{{ $sesItem['price'] }}</div>
-    <form action="{{ route('updateOrBack') }}" method="POST">
+    <form class="inline-block" action="{{ route('update') }}" method="POST">
       @csrf
       <x-button>登録</x-button>
-      <button class="inline-flex items-center px-4 py-2 bg-gray-800 rounded-md font-semibold text-xs text-white" type="submit" name="back" value="back">戻る</button>
     </form>
+      <x-button class="bg-green-600 hover:bg-green-500 mt-8 ml-8" onclick="location.href='{{ route('edit', ['id' => $sesItem['itemId']]) }}'">戻る</x-button>
   </div>
 </x-app-layout>

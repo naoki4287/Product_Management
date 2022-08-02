@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\editController;
 use App\Http\Controllers\ProductManagementController;
+use App\Http\Controllers\shippingDestinationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ProductManagementController::class, 'top'])->middleware(['auth'])->name('top');
 Route::get('/list', [ProductManagementController::class, 'list'])->name('list');
-Route::get('/newadd', [ProductManagementController::class, 'newadd'])->name('newadd');
+Route::get('/add', [ProductManagementController::class, 'add'])->name('add');
 Route::post('/productRegister', [ProductManagementController::class, 'productRegister'])->name('productRegister');
 Route::get('/confirm', [ProductManagementController::class, 'confirm'])->name('confirm');
 Route::post('/storeOrBack', [ProductManagementController::class, 'storeOrBack'])->name('storeOrBack');
@@ -27,7 +29,9 @@ Route::post('/delete', [ProductManagementController::class, 'delete'])->name('de
 Route::get('/edit/{id}', [ProductManagementController::class, 'edit'])->name('edit');
 Route::post('/editValidateSession', [ProductManagementController::class, 'editValidateSession'])->name('editValidateSession');
 Route::get('/editConfirm', [ProductManagementController::class, 'editConfirm'])->name('editConfirm');
-Route::post('/updateOrBack', [ProductManagementController::class, 'updateOrBack'])->name('updateOrBack');
+
+
+Route::post('/update', [ProductManagementController::class, 'update'])->name('update');
 Route::get('/updateComplete', [ProductManagementController::class, 'updateComplete'])->name('updateComplete');
 Route::get('/contact', [ProductManagementController::class, 'contact'])->name('contact');
 Route::post('/contactValidateSession', [ProductManagementController::class, 'contactValidateSession'])->name('contactValidateSession');
@@ -39,10 +43,16 @@ Route::get('/mail', [ProductManagementController::class, 'mail'])->name('mail');
 Route::get('/mypage', [ProductManagementController::class, 'mypage'])->name('mypage');
 Route::post('/favorite', [ProductManagementController::class, 'favorite'])->name('favorite');
 
-Route::post('/addCart', [CartController::class, 'addCart'])->name('addCart');
-Route::get('/cart', [CartController::class, 'cart'])->name('cart');
-Route::post('/cartDelete', [CartController::class, 'cartDelete'])->name('cartDelete');
-Route::post('/buy', [CartController::class, 'buy'])->name('buy');
+Route::group(['prefix' => 'cart'], function () {
+  Route::post('/add', [CartController::class, 'add'])->name('add');
+  Route::get('/', [CartController::class, 'cart'])->name('cart');
+  Route::post('/delete', [CartController::class, 'delete'])->name('delete');
+  Route::post('/buy', [CartController::class, 'buy'])->name('buy');
+});
 
+Route::group(['prefix' => 'shippingDestination'], function () {
+  Route::get('/', [shippingDestinationController::class, 'index'])->name('shippingDestination.index');
+  Route::post('/delete', [shippingDestinationController::class, 'delete'])->name('shippingDestination.delete');
+});
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

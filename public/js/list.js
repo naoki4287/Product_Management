@@ -9,7 +9,6 @@ const checkbox = document.getElementsByName("checkbox");
 const checkboxes = Array.from(checkbox);
 const items = itemsList.data;
 const selects = Array.from(select);
-console.log(items);
 
 delModalOpen.addEventListener("click", () => {
     deleteModal.classList.remove("hidden");
@@ -25,24 +24,17 @@ $(".checkbox").on("click", function () {
         let id = $(this).attr("value");
         $(this).attr("id", id).attr("disabled", true);
         cartItemId.value += id + ",";
-        console.log(cartItemId.value);
     } else {
         $(this).removeAttr("id").removeAttr;
     }
 });
 
 $(".select").on("change", function () {
-    console.log($(this));
     if ($(this).val() !== "" && $(this).attr("id") === undefined) {
         let id = $(this).val();
         $(this).attr("id", id);
     }
-    console.log($(this).attr("id"));
 });
-
-for (let i = 0; i < select.length; i++) {
-    console.log(select[i].value);
-}
 
 $("#cartBtn").on("click", function () {
     const selectedItems = selects.filter((select) => {
@@ -65,7 +57,7 @@ $("#cartBtn").on("click", function () {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         type: "post",
-        url: "/addCart",
+        url: "cart/add",
         data: {
             selectedItemsIds: selectedItemsIds,
             selectedItemsNum: selectedItemsNum,

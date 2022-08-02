@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Log;
+use App\Models\Shipping;
 use App\Models\User;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -26,5 +27,6 @@ class DatabaseSeeder extends Seeder
 
     // factoryを使う場合
     User::factory(3)->create();
+    Shipping::factory(18)->create();
   }
 }

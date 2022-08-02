@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log as FacadesLog;
 
 class CartController extends Controller
 {
-  public function addCart(Request $request)
+  public function add(Request $request)
   {
     $selectedItemsIds = $request->post('selectedItemsIds');
     $selectedItemsNum = $request->post('selectedItemsNum');
@@ -37,7 +37,7 @@ class CartController extends Controller
     return view('cart', compact('cartInItems'));
   }
 
-  public function cartDelete(Request $request)
+  public function delete(Request $request)
   {
     Cart::find($request->cartItemId)->delete();
     return back();
