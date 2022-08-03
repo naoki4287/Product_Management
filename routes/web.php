@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\editController;
-use App\Http\Controllers\ProductManagementController;
+use App\Http\Controllers\mainController;
 use App\Http\Controllers\shippingDestinationController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,30 +18,30 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', [ProductManagementController::class, 'top'])->middleware(['auth'])->name('top');
-Route::get('/list', [ProductManagementController::class, 'list'])->name('list');
-Route::get('/add', [ProductManagementController::class, 'add'])->name('add');
-Route::post('/productRegister', [ProductManagementController::class, 'productRegister'])->name('productRegister');
-Route::get('/confirm', [ProductManagementController::class, 'confirm'])->name('confirm');
-Route::post('/storeOrBack', [ProductManagementController::class, 'storeOrBack'])->name('storeOrBack');
-Route::get('/complete', [ProductManagementController::class, 'complete'])->name('complete');
-Route::post('/delete', [ProductManagementController::class, 'delete'])->name('delete');
-Route::get('/edit/{id}', [ProductManagementController::class, 'edit'])->name('edit');
-Route::post('/editValidateSession', [ProductManagementController::class, 'editValidateSession'])->name('editValidateSession');
-Route::get('/editConfirm', [ProductManagementController::class, 'editConfirm'])->name('editConfirm');
+Route::get('/', [mainController::class, 'top'])->middleware(['auth'])->name('top');
+Route::get('/list', [mainController::class, 'list'])->name('list');
+Route::get('/add', [mainController::class, 'add'])->name('add');
+Route::post('/productRegister', [mainController::class, 'productRegister'])->name('productRegister');
+Route::get('/confirm', [mainController::class, 'confirm'])->name('confirm');
+Route::post('/storeOrBack', [mainController::class, 'storeOrBack'])->name('storeOrBack');
+Route::get('/complete', [mainController::class, 'complete'])->name('complete');
+Route::post('/delete', [mainController::class, 'delete'])->name('delete');
+Route::get('/edit/{id}', [mainController::class, 'edit'])->name('edit');
+Route::post('/editValidateSession', [mainController::class, 'editValidateSession'])->name('editValidateSession');
+Route::get('/editConfirm', [mainController::class, 'editConfirm'])->name('editConfirm');
 
 
-Route::post('/update', [ProductManagementController::class, 'update'])->name('update');
-Route::get('/updateComplete', [ProductManagementController::class, 'updateComplete'])->name('updateComplete');
-Route::get('/contact', [ProductManagementController::class, 'contact'])->name('contact');
-Route::post('/contactValidateSession', [ProductManagementController::class, 'contactValidateSession'])->name('contactValidateSession');
-Route::get('/contactConfirm', [ProductManagementController::class, 'contactConfirm'])->name('contactConfirm');
-Route::post('/sendOrBack', [ProductManagementController::class, 'sendOrBack'])->name('sendOrBack');
-Route::post('/contactMail', [ProductManagementController::class, 'contactMail'])->name('contactMail');
-Route::get('/sendComplete', [ProductManagementController::class, 'sendComplete'])->name('sendComplete');
-Route::get('/mail', [ProductManagementController::class, 'mail'])->name('mail');
-Route::get('/mypage', [ProductManagementController::class, 'mypage'])->name('mypage');
-Route::post('/favorite', [ProductManagementController::class, 'favorite'])->name('favorite');
+Route::post('/update', [mainController::class, 'update'])->name('update');
+Route::get('/updateComplete', [mainController::class, 'updateComplete'])->name('updateComplete');
+Route::get('/contact', [mainController::class, 'contact'])->name('contact');
+Route::post('/contactValidateSession', [mainController::class, 'contactValidateSession'])->name('contactValidateSession');
+Route::get('/contactConfirm', [mainController::class, 'contactConfirm'])->name('contactConfirm');
+Route::post('/sendOrBack', [mainController::class, 'sendOrBack'])->name('sendOrBack');
+Route::post('/contactMail', [mainController::class, 'contactMail'])->name('contactMail');
+Route::get('/sendComplete', [mainController::class, 'sendComplete'])->name('sendComplete');
+Route::get('/mail', [mainController::class, 'mail'])->name('mail');
+Route::get('/mypage', [mainController::class, 'mypage'])->name('mypage');
+Route::post('/favorite', [mainController::class, 'favorite'])->name('favorite');
 
 Route::group(['prefix' => 'cart'], function () {
   Route::post('/add', [CartController::class, 'add'])->name('cart.add');
@@ -54,8 +54,10 @@ Route::group(['prefix' => 'shippingDestination'], function () {
   Route::get('/', [shippingDestinationController::class, 'index'])->name('sd.index');
   Route::post('/delete', [shippingDestinationController::class, 'delete'])->name('sd.delete');
   Route::get('/register', [shippingDestinationController::class, 'register'])->name('sd.register');
+  Route::post('/validateSession', [shippingDestinationController::class, 'validateSession'])->name('sd.validateSession');
   Route::post('/store', [shippingDestinationController::class, 'store'])->name('sd.store');
   Route::get('/complete', [shippingDestinationController::class, 'complete'])->name('sd.complete');
 });
+
 
 require __DIR__ . '/auth.php';
