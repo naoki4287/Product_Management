@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\sdValidateSessionRequest;
+use Illuminate\Support\Facades\Log as FacadesLog;
 use App\Models\Shipping;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -33,9 +35,27 @@ class shippingDestinationController extends Controller
     return view('shippingDestination.register');
   }
 
-  public function validateSssion()
+  // public function validateSession(sdValidateSessionRequest $request)
+  public function validateSession(Request $request)
   {
-    return redirect()->route('sd.confirm');
+    // $sdinfo = $request->post('sdinfo');
+    // FacadesLog::debug($sdinfo);
+    // FacadesLog::debug($request->post('sdinfo'));
+  //   $validated = $sdinfo->validate([
+  //     'name' => 'required',
+  //     'address' => 'required',
+  //     'tel' => 'required|integer',
+  // ]);
+    $sdinfo = $request->validate([
+      'name' => 'required',
+      'address' => 'required',
+      'tel' => 'required|numeric',
+  ]);
+    // $sd = $request->post('sd');
+    // FacadesLog::debug($validated);
+    // return $sd;
+    return $sdinfo;
+    // return $validated;
   }
 
   public function confirm()
