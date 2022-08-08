@@ -1,18 +1,8 @@
 "use strict";
 
+
 const input = document.getElementsByClassName("input");
 const inputs = Array.from(input);
-// const form = document.getElementById("form");
-
-// $("#form").on("submit", function (e) {
-//     e.preventDefault();
-// });
-
-// window.addEventListener("popstate", (e) => {
-//     console.log(e);
-//     $("#confirmPage").attr("class", "hidden");
-//     $("#registerPage").removeAttr("class", "hidden");
-// });
 
 const confirmContent = (name, address, tel) =>
     `
@@ -43,7 +33,6 @@ $("#registerBtn").on("click", function () {
     sdinfo.name = sd[0];
     sdinfo.address = sd[1];
     sdinfo.tel = sd[2];
-    console.log(sdinfo);
 
     $.ajax({
         headers: {
@@ -56,18 +45,24 @@ $("#registerBtn").on("click", function () {
         },
     })
         //通信が成功したとき
-        .done((sd) => {
-          console.log(sd);
+        .done((sdinfo) => {
+          console.log(sdinfo);
+          console.log(Array.isArray(sdinfo.name));
+          if(Array.isArray(sdinfo.name) || Array.isArray(sdinfo.address) || Array.isArray(sdinfo.tel)) {
+            $('#errorList').empty()
+            const sds = Object.values(sdinfo);
+            sds.map((sd) => {
+              $('#errorList').append(`<span>${sd}</span><br>`)
+            })
+          } else {
             history.pushState("", "", "confirm");
             $("#registerPage").attr("class", "hidden");
-            $("#confirmPage").append(confirmContent(sd.name, sd.address, sd.tel));
+            $("#confirmPage").append(confirmContent(sdinfo.name, sdinfo.address, sdinfo.tel));
+          }
         })
         //通信が失敗したとき
         .fail((error) => {
-            console.log("失敗しました");
-            console.log(error.responseJSON);
-            console.log(error.responseJSON.errors.address[0]);
-            // // console.error(error.statusText);
+            console.error(error.statusText);
         });
 });
 

@@ -1,11 +1,8 @@
 <x-app-layout>
   <div class="ml-12">
     <div id="registerPage">
-      <ul>
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-      </ul>
+      <div id="errorList">
+      </div>
       <label class="inline-block mt-4" for="name">出荷先会社名</label><br>
       <x-PMinput class="input" name="name" id="name" value="{{ old('name') }}"></x-PMinput><br>
       <label class="inline-block mt-4" for="address">出荷先住所</label><br>
