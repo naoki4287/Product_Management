@@ -36,7 +36,7 @@ class shippingDestinationController extends Controller
     return view('shippingDestination.register');
   }
 
-  public function validateSession(Request $request)
+  public function ajaxValidate(Request $request)
   {
     $sdinfo = $request->post('sdinfo');
     $message = [

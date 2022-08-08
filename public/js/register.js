@@ -39,7 +39,7 @@ $("#registerBtn").on("click", function () {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         type: "post",
-        url: "validateSession",
+        url: "ajaxValidate",
         data: {
             sdinfo: sdinfo,
         },
@@ -81,7 +81,7 @@ $(document).on("click", "#storeBtn", function () {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         // type: "post",
-        url: "validateSession",
+        url: "validate",
         data: {
             sd: sd,
         },

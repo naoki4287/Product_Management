@@ -54,7 +54,7 @@ Route::group(['prefix' => 'shippingDestination'], function () {
   Route::get('/', [shippingDestinationController::class, 'index'])->name('sd.index');
   Route::post('/delete', [shippingDestinationController::class, 'delete'])->name('sd.delete');
   Route::get('/register', [shippingDestinationController::class, 'register'])->name('sd.register');
-  Route::post('/validateSession', [shippingDestinationController::class, 'validateSession'])->name('sd.validateSession');
+  Route::post('/ajaxValidate', [shippingDestinationController::class, 'ajaxValidate'])->name('sd.ajaxValidate');
   Route::post('/store', [shippingDestinationController::class, 'store'])->name('sd.store');
   Route::get('/complete', [shippingDestinationController::class, 'complete'])->name('sd.complete');
 });
