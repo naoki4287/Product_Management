@@ -1,6 +1,5 @@
 "use strict";
 
-
 const input = document.getElementsByClassName("input");
 const inputs = Array.from(input);
 
@@ -15,6 +14,14 @@ const confirmContent = (name, address, tel) =>
     <div class="sdContent">${tel}</div>
     <button class="inline-flex items-center mt-8 px-4 py-2 bg-gray-800 rounded-md font-semibold text-xs text-white" id="storeBtn">登録</button>
     <button class="inline-flex items-center mt-8 ml-8 px-4 py-2 bg-green-600 rounded-md font-semibold text-xs text-white" id="backBtn">戻る</button>
+  </div>
+`;
+
+const completeContent = () =>
+    `
+  <div class="text-center text-lg mt-8">
+    <div>出荷先会社を登録しました</div>
+    <button class="inline-flex items-center mt-8 ml-8 px-4 py-2 bg-green-600 rounded-md font-semibold text-xs text-white" id="sdListBtn">出荷先会社一覧へ</button>
   </div>
 `;
 
@@ -46,19 +53,25 @@ $("#registerBtn").on("click", function () {
     })
         //通信が成功したとき
         .done((sdinfo) => {
-          console.log(sdinfo);
-          console.log(Array.isArray(sdinfo.name));
-          if(Array.isArray(sdinfo.name) || Array.isArray(sdinfo.address) || Array.isArray(sdinfo.tel)) {
-            $('#errorList').empty()
-            const sds = Object.values(sdinfo);
-            sds.map((sd) => {
-              $('#errorList').append(`<span>${sd}</span><br>`)
-            })
-          } else {
-            history.pushState("", "", "confirm");
-            $("#registerPage").attr("class", "hidden");
-            $("#confirmPage").append(confirmContent(sdinfo.name, sdinfo.address, sdinfo.tel));
-          }
+            console.log(sdinfo);
+            console.log(Array.isArray(sdinfo.name));
+            if (
+                Array.isArray(sdinfo.name) ||
+                Array.isArray(sdinfo.address) ||
+                Array.isArray(sdinfo.tel)
+            ) {
+                $("#errorList").empty();
+                const sds = Object.values(sdinfo);
+                sds.map((sd) => {
+                    $("#errorList").append(`<span>${sd}</span><br>`);
+                });
+            } else {
+                history.pushState("", "", "confirm");
+                $("#registerPage").attr("class", "hidden");
+                $("#confirmPage").append(
+                    confirmContent(sdinfo.name, sdinfo.address, sdinfo.tel)
+                );
+            }
         })
         //通信が失敗したとき
         .fail((error) => {
@@ -66,7 +79,6 @@ $("#registerBtn").on("click", function () {
         });
 });
 
-// $("#storeBtn").on("click", function () {
 $(document).on("click", "#storeBtn", function () {
     let sdContent = document.getElementsByClassName("sdContent");
     const sdContents = Array.from(sdContent);
@@ -80,18 +92,30 @@ $(document).on("click", "#storeBtn", function () {
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
-        // type: "post",
-        url: "validate",
+        type: "post",
+        url: "store",
         data: {
             sd: sd,
         },
     })
         //通信が成功したとき
-        .done((sd) => {
-            console.log("成功しました");
+        .done(() => {
+            history.pushState("", "", "complete");
+            $("#confirmPage").attr("class", "hidden");
+            $("#completePage").append(completeContent());
         })
         //通信が失敗したとき
-        .fail((error) => {
+        .fail(() => {
             console.log("失敗しました");
         });
+});
+
+$(document).on("click", "#backBtn", function () {
+    $("#registerPage").removeAttr("class", "hidden");
+    $("#confirmPage").empty();
+    history.back();
+});
+
+$(document).on("click", "#sdListBtn", function () {
+    location.href = "register";
 });

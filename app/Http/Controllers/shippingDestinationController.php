@@ -66,13 +66,9 @@ class shippingDestinationController extends Controller
     return view('shippingDestination.confirm');
   }
 
-  public function store()
+  public function store(Request $request)
   {
-    // return
-  }
-
-  public function complete()
-  {
-    return view('shippingDestination.complete');
+    $sd = $request->post('sd');
+    Shipping::create(['name' => $sd[0], 'address' => $sd[1], 'tel' => $sd[2]]);
   }
 }

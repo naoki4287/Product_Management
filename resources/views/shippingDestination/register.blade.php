@@ -13,6 +13,8 @@
     </div>
     <div id="confirmPage">
     </div>
+    <div id="completePage">
+    </div>
   </div>
   <script type="module" src="{{ asset('js/register.js') }}"></script>
 </x-app-layout>
