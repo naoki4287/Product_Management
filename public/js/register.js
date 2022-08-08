@@ -2,13 +2,17 @@
 
 const input = document.getElementsByClassName("input");
 const inputs = Array.from(input);
+// const form = document.getElementById("form");
+
+// $("#form").on("submit", function (e) {
+//     e.preventDefault();
+// });
 
 // window.addEventListener("popstate", (e) => {
 //     console.log(e);
 //     $("#confirmPage").attr("class", "hidden");
 //     $("#registerPage").removeAttr("class", "hidden");
 // });
-
 
 const confirmContent = (name, address, tel) =>
     `
@@ -31,10 +35,11 @@ $("#registerBtn").on("click", function () {
     });
 
     let sdinfo = {
-      name: null,
-      address: null,
-      tel: null,
-    }
+        name: null,
+        address: null,
+        tel: null,
+    };
+
     sdinfo.name = sd[0];
     sdinfo.address = sd[1];
     sdinfo.tel = sd[2];
@@ -47,30 +52,29 @@ $("#registerBtn").on("click", function () {
         type: "post",
         url: "validateSession",
         data: {
-            // sd: sd,
-          sdinfo: sdinfo,
+            sdinfo: sdinfo,
         },
     })
         //通信が成功したとき
         .done((sd) => {
+          console.log(sd);
             history.pushState("", "", "confirm");
             $("#registerPage").attr("class", "hidden");
-            $("#confirmPage").append(confirmContent(sd[0], sd[1], sd[2]));
+            $("#confirmPage").append(confirmContent(sd.name, sd.address, sd.tel));
         })
         //通信が失敗したとき
-        .fail((errors, response) => {
+        .fail((error) => {
             console.log("失敗しました");
-            console.log(name[0]);
-            console.log(address[0]);
-            console.log(response.errors);
-            // console.error(error.statusText);
+            console.log(error.responseJSON);
+            console.log(error.responseJSON.errors.address[0]);
+            // // console.error(error.statusText);
         });
 });
 
 // $("#storeBtn").on("click", function () {
 $(document).on("click", "#storeBtn", function () {
-  let sdContent = document.getElementsByClassName("sdContent");
-  const sdContents = Array.from(sdContent);
+    let sdContent = document.getElementsByClassName("sdContent");
+    const sdContents = Array.from(sdContent);
 
     const sd = sdContents.map((sdContent) => {
         let sdinfo = sdContent.textContent;

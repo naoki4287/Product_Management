@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\sdValidateSessionRequest;
 use Illuminate\Support\Facades\Log as FacadesLog;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Shipping;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -35,27 +36,29 @@ class shippingDestinationController extends Controller
     return view('shippingDestination.register');
   }
 
-  // public function validateSession(sdValidateSessionRequest $request)
   public function validateSession(Request $request)
   {
-    // $sdinfo = $request->post('sdinfo');
-    // FacadesLog::debug($sdinfo);
-    // FacadesLog::debug($request->post('sdinfo'));
-  //   $validated = $sdinfo->validate([
-  //     'name' => 'required',
-  //     'address' => 'required',
-  //     'tel' => 'required|integer',
-  // ]);
-    $sdinfo = $request->validate([
+    $sdinfo = $request->post('sdinfo');
+    $message = [
+      'name.required' => '出荷先会社名は必ず入力してください',
+      'address.required' => '出荷先住所は必ず入力してください',
+      'tel.required' => '電話番号は必ず入力してください',
+      'tel.numeric' => '電話番号は数値で入力してください',
+    ];
+
+    $rules = [
       'name' => 'required',
       'address' => 'required',
       'tel' => 'required|numeric',
-  ]);
-    // $sd = $request->post('sd');
-    // FacadesLog::debug($validated);
-    // return $sd;
+    ];
+
+    $validator = Validator::make($sdinfo, $rules, $message);
+
+    if ($validator->fails()) {
+      return response()->json($validator->messages()->toArray());
+    }
+
     return $sdinfo;
-    // return $validated;
   }
 
   public function confirm()

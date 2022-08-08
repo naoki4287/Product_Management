@@ -24,24 +24,6 @@ class sdValidateSessionRequest extends FormRequest
   }
 
   /**
-   * [override] バリデーション失敗時ハンドリング
-   *
-   * @param array $errors
-   * @return JsonResponse
-   */
-  protected function failedValidation(Validator $validator)
-  {
-    $response['data']    = [];
-    $response['status']  = 'NG';
-    $response['summary'] = 'Failed validation.';
-    $response['errors']  = $validator->errors()->toArray();
-
-    throw new HttpResponseException(
-      response()->json($response, 422)
-    );
-  }
-
-  /**
    * Get the validation rules that apply to the request.
    *
    * @return array<string, mixed>
