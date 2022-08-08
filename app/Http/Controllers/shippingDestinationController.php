@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\sdValidateSessionRequest;
 use Illuminate\Support\Facades\Log as FacadesLog;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Shipping;
