@@ -42,6 +42,7 @@ Route::get('/sendComplete', [mainController::class, 'sendComplete'])->name('send
 Route::get('/mail', [mainController::class, 'mail'])->name('mail');
 Route::get('/mypage', [mainController::class, 'mypage'])->name('mypage');
 Route::post('/favorite', [mainController::class, 'favorite'])->name('favorite');
+Route::get('/buyItems', [mainController::class, 'buyItems'])->name('buyItems');
 
 Route::group(['prefix' => 'cart'], function () {
   Route::post('/add', [CartController::class, 'add'])->name('cart.add');

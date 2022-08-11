@@ -223,4 +223,16 @@ class mainController extends Controller
 
     return back();
   }
+
+  public function buyItems()
+  {
+    $buyItems = DB::table('items')
+      ->join('buy_items', 'items.id', '=', 'buy_items.product_id')
+      ->select('items.*', 'buy_items.*')
+      ->where('user_id', '=', Auth::id())
+      ->limit(30)
+      ->get();
+
+      return $buyItems;
+  }
 }
