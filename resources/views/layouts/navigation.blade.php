@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-blue-100 border-b border-gray-100 ">
+<nav x-data="{ open: false }" class="bg-blue-100 border-b border-gray-100">
   <!-- Primary Navigation Menu -->
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
     <div class="flex justify-between h-16">
@@ -6,14 +6,14 @@
 
         <!-- Navigation Links -->
         <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-          <x-nav-link :href="route('top')" :active="request()->routeIs('top')">
-            {{ __('トップページ') }}
+          <x-nav-link id="pageList">
+            {{ __('ページリスト') }}
           </x-nav-link>
         </div>
 
         <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-          <x-nav-link :href="route('mypage')" :active="request()->routeIs('mypage')">
-            {{ __('マイページ') }}
+          <x-nav-link id="buyItems">
+            {{ __('購入履歴') }}
           </x-nav-link>
         </div>
       </div>
@@ -40,7 +40,6 @@
             <!-- Authentication -->
             <form method="POST" action="{{ route('logout') }}">
               @csrf
-
               <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                 {{ __('Log Out') }}
@@ -84,7 +83,6 @@
         <!-- Authentication -->
         <form method="POST" action="{{ route('logout') }}">
           @csrf
-
           <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
                                         this.closest('form').submit();">
             {{ __('Log Out') }}
